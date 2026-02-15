@@ -1,0 +1,21 @@
+# Folder hasil build
+bin/
+obj/
+publish/
+
+# Folder konfigurasi IDE (Visual Studio / VS Code)
+.vs/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Database SQLite (Agar data testing lokal tidak ter-push)
+*.db
+*.db-shm
+*.db-wal
+
+# OS files
+Thumbs.db
+.DS_Store
