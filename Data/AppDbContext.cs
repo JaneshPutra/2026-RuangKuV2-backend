@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using RuangKuApi.Models; // Pastikan ini sesuai nama project
+using RuangKuApi.Models;
 
 namespace RuangKuApi.Data;
 
@@ -12,7 +12,6 @@ public class AppDbContext : DbContext
     public DbSet<Ruangan> Ruangan { get; set; }
 }
 
-// Tambahkan class ini tepat di bawahnya. Ini adalah "Jembatan Utama" untuk migrasi.
 public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
 {
     public AppDbContext CreateDbContext(string[] args)

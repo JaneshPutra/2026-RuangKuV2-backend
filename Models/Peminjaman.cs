@@ -9,5 +9,5 @@ public class Peminjaman
     public string Ruangan { get; set; } = string.Empty;
     public DateTime TanggalPinjam { get; set; }
     public DateTime TanggalKembali { get; set; }
-    public string Status { get; set; } = "Menunggu"; // Menunggu, Disetujui, Ditolak
+    public string Status { get; set; } = "Menunggu"; 
 }
