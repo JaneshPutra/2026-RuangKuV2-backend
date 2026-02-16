@@ -13,25 +13,21 @@ namespace RuangKuApi.Controllers
     public class RuanganController : ControllerBase
     {
         private readonly AppDbContext _context;
-
         public RuanganController(AppDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Ruangan
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Ruangan>>> GetRuangan()
         {
             return await _context.Ruangan.ToListAsync();
         }
 
-        // GET: api/Ruangan/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Ruangan>> GetRuangan(int id)
         {
             var ruangan = await _context.Ruangan.FindAsync(id);
-
             if (ruangan == null)
             {
                 return NotFound();
@@ -40,7 +36,6 @@ namespace RuangKuApi.Controllers
             return ruangan;
         }
 
-        // POST: api/Ruangan
         [HttpPost]
         public async Task<ActionResult<Ruangan>> PostRuangan(Ruangan ruangan)
         {
@@ -50,7 +45,6 @@ namespace RuangKuApi.Controllers
             return CreatedAtAction(nameof(GetRuangan), new { id = ruangan.Id }, ruangan);
         }
 
-        // PUT: api/Ruangan/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutRuangan(int id, Ruangan ruangan)
         {
@@ -80,7 +74,6 @@ namespace RuangKuApi.Controllers
             return NoContent();
         }
 
-        // DELETE: api/Ruangan/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRuangan(int id)
         {

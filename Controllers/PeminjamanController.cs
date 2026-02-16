@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using RuangKuApi.Data;
 using RuangKuApi.Models;
+using RuangKuApi.Data;
 
 namespace RuangKuApi.Controllers;
 
@@ -16,34 +16,49 @@ public class PeminjamanController : ControllerBase
         _context = context;
     }
 
-    // lihat data
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Peminjaman>>> GetAll()
+    public async Task<ActionResult<IEnumerable<Peminjaman>>> GetPeminjaman(
+        [FromQuery] string? search, 
+        [FromQuery] string? status)
     {
-        return await _context.Peminjamans.ToListAsync();
+        var query = _context.Peminjamans.AsQueryable(); 
+
+        if (!string.IsNullOrEmpty(search))
+        {
+            query = query.Where(p => 
+                p.NamaPeminjam.ToLower().Contains(search.ToLower()) || 
+                p.Ruangan.ToLower().Contains(search.ToLower()));
+        }
+
+        if (!string.IsNullOrEmpty(status) && status != "All")
+        {
+            query = query.Where(p => p.Status == status);
+        }
+
+        return await query.OrderByDescending(p => p.Id).ToListAsync();
     }
 
-    // detail
     [HttpGet("{id}")]
-    public async Task<ActionResult<Peminjaman>> GetById(int id)
+    public async Task<ActionResult<Peminjaman>> GetPeminjaman(int id)
     {
-        var data = await _context.Peminjamans.FindAsync(id);
-        if (data == null) return NotFound();
-        return data;
+        var peminjaman = await _context.Peminjamans.FindAsync(id);
+
+        if (peminjaman == null) return NotFound();
+
+        return peminjaman;
     }
 
-    // tambah data
     [HttpPost]
-    public async Task<ActionResult<Peminjaman>> Create(Peminjaman peminjaman)
+    public async Task<ActionResult<Peminjaman>> PostPeminjaman(Peminjaman peminjaman)
     {
         _context.Peminjamans.Add(peminjaman);
         await _context.SaveChangesAsync();
-        return CreatedAtAction(nameof(GetById), new { id = peminjaman.Id }, peminjaman);
+
+        return CreatedAtAction(nameof(GetPeminjaman), new { id = peminjaman.Id }, peminjaman);
     }
 
-    // update
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(int id, Peminjaman peminjaman)
+    public async Task<IActionResult> PutPeminjaman(int id, Peminjaman peminjaman)
     {
         if (id != peminjaman.Id) return BadRequest();
 
@@ -62,14 +77,13 @@ public class PeminjamanController : ControllerBase
         return NoContent();
     }
 
-    // delete
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> DeletePeminjaman(int id)
     {
-        var data = await _context.Peminjamans.FindAsync(id);
-        if (data == null) return NotFound();
+        var peminjaman = await _context.Peminjamans.FindAsync(id);
+        if (peminjaman == null) return NotFound();
 
-        _context.Peminjamans.Remove(data);
+        _context.Peminjamans.Remove(peminjaman);
         await _context.SaveChangesAsync();
 
         return NoContent();
