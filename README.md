@@ -11,18 +11,18 @@ Sistem Backend API untuk pengelolaan reservasi ruangan menggunakan ASP.NET Core 
 ## Tech Stack
 - **Framework**: .NET 8.0 / ASP.NET Core Web API
 - **Database**: SQLite (Entity Framework Core)
-- **Tools**: Swagger/OpenAPI untuk dokumentasi API.
+- **Tools**: Swagger/Postman untuk dokumentasi API.
 
 ## Cara Menjalankan
 1. Pastikan .NET SDK sudah terinstall.
 2. Clone repository.
 3. Jalankan perintah restore:
    ```bash
-   dotnet restore```
+   dotnet restore
 4. Update database 
    ```bash
-   dotnet ef database update```
+   dotnet ef database update
 5. Jalankan Aplikasi
    ```bash
-   dotnet run```
+   dotnet run
 6. API akan berjalan di http://localhost:5205 dan Swagger dapat diakses di /swagger.
